@@ -1,16 +1,15 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from task_2.models import User, UserAdult
+from task_3.models import User, UserAdult, Feedback
 
 app = FastAPI()
 
 user = User(id=1, name="John Doe")
 
-@app.get("/users", response_model=User)
-async def get_user():
-    return user
+list_of_feedback = []
 
-@app.post("/user", response_model=UserAdult)
-async def get_user_1(user: UserAdult):
-    user.is_adult = (user.age >= 18)
-    return user
+
+@app.post("/feedback")
+async def get_user_1(feedback: Feedback):
+    list_of_feedback.append(feedback)
+    return {"message": f"Feedback received. Thank you, {feedback.name}!"}
